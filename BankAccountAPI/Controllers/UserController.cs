@@ -21,5 +21,17 @@ namespace BankAccountAPI.Controllers
             var usersList = _applicationDbContext.Users.ToList();
             return Ok(usersList);
         }
+
+        [HttpGet]
+        [Route("GetUser")]
+        public IActionResult GetUser(int id)
+        {
+            var user = _applicationDbContext.Users.Where(x => x.UserID == id).FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(user);
+        }
     }
 }
