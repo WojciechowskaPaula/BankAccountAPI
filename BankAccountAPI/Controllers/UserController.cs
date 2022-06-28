@@ -1,4 +1,5 @@
 ﻿using BankAccountAPI.Data;
+using BankAccountAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,15 @@ namespace BankAccountAPI.Controllers
                 return NotFound("User not found");
             }
             return Ok(user);
+        }
+
+        [HttpPut]
+        [Route("AddUser")]
+        public IActionResult AddUser(User user)
+        {
+            _applicationDbContext.Users.Add(user);
+            _applicationDbContext.SaveChanges();
+            return Ok();
         }
     }
 }
