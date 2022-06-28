@@ -58,5 +58,19 @@ namespace BankAccountAPI.Controllers
             _applicationDbContext.SaveChanges();
             return Ok(user);
         }
+
+        [HttpGet]
+        [Route("GetUsersByNationality")]
+
+        public IActionResult GetUsersByNationality(string nationality)
+        {
+            var users = _applicationDbContext.Users.Where(x => x.Nationality == nationality).ToList();
+            if (users.Count > 0)
+            {
+                return Ok(users);
+            }
+            else
+                return NotFound($"Users with {nationality} not found");
+        }
     }
 }
