@@ -43,5 +43,20 @@ namespace BankAccountAPI.Controllers
             _applicationDbContext.SaveChanges();
             return Ok();
         }
+
+        [HttpDelete]
+        [Route("DeleteUser")]
+        public IActionResult DeleteUser(int id)
+        {
+            var user = _applicationDbContext.Users.Where(x => x.UserID == id).FirstOrDefault();
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            _applicationDbContext.Users.Remove(user);
+            _applicationDbContext.SaveChanges();
+            return Ok(user);
+        }
     }
 }
