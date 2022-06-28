@@ -72,5 +72,19 @@ namespace BankAccountAPI.Controllers
             else
                 return NotFound($"Users with {nationality} not found");
         }
+
+        [HttpGet]
+        [Route("GetUserByPhoneNumber")]
+
+        public IActionResult GetUserByPhoneNumber(string phoneNumber)
+        {
+            var user = _applicationDbContext.Users.Where(x => x.PhoneNumber == phoneNumber).FirstOrDefault();
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+                return NotFound($"Users with {phoneNumber} not found");
+        }
     }
 }
