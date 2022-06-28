@@ -21,11 +21,11 @@ namespace BankAccountAPI.Models
         public string AccountNumber { get; set; }
 
         [Required]
-        [MinLength(8)]
+        [MinLength(8, ErrorMessage = "IBAN must contain minimum 8 characters")]
         public string IBAN { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(30, ErrorMessage = "The Currency must contain maximium 30 characters")]
         public string Currency { get; set; }
         public User User { get; set; }
     }
