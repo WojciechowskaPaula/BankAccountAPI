@@ -17,7 +17,7 @@ namespace BankAccountAPI.Models
         [Required]
         [DisplayName("Account number")]
         [StringLength(20, MinimumLength =7, ErrorMessage ="Account number is not valid")]
-        [RegularExpression("^[^-][0 - 9]$", ErrorMessage ="The Account number must contain only numbers")]
+        [RegularExpression("^[0-9]*$", ErrorMessage ="The Account number must contain only numbers")]
         public string AccountNumber { get; set; }
 
         [Required]
