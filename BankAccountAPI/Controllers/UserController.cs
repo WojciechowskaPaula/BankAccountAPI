@@ -61,7 +61,6 @@ namespace BankAccountAPI.Controllers
 
         [HttpGet]
         [Route("GetUsersByNationality")]
-
         public IActionResult GetUsersByNationality(string nationality)
         {
             var users = _applicationDbContext.Users.Where(x => x.Nationality == nationality).ToList();
@@ -75,7 +74,6 @@ namespace BankAccountAPI.Controllers
 
         [HttpGet]
         [Route("GetUserByPhoneNumber")]
-
         public IActionResult GetUserByPhoneNumber(string phoneNumber)
         {
             var user = _applicationDbContext.Users.Where(x => x.PhoneNumber == phoneNumber).FirstOrDefault();
