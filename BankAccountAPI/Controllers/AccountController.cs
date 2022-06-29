@@ -66,5 +66,23 @@ namespace BankAccountAPI.Controllers
             else
                 return NotFound();
         }
+
+        [HttpDelete]
+        [Route("DeleteAccount")]
+        public IActionResult DeleteAccount(int id)
+        {
+            var userToRemove = _applicationDbContext.Accounts.Where(x => x.User.UserID == id).FirstOrDefault();
+
+            if (userToRemove != null)
+            {
+                _applicationDbContext.Accounts.Remove(userToRemove);
+                _applicationDbContext.SaveChanges();
+                return Ok();
+            }
+            else
+                return NotFound($"Account with {id} was found");
+        }
+
+
     }
 }
