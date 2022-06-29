@@ -1,4 +1,6 @@
 ﻿using BankAccountAPI.Data;
+using BankAccountAPI.Models;
+using BankAccountAPI.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +24,44 @@ namespace BankAccountAPI.Controllers
         public IActionResult GetAccountByUserId(int id)
         {
             var account = _applicationDbContext.Accounts.Where(x => x.User.UserID == id).Include(x => x.User).FirstOrDefault();
-           
+
             if (account != null)
             {
                 return Ok(account);
+            }
+            else
+                return NotFound();
+        }
+
+        [HttpGet]
+        [Route("GetAllAccounts")]
+        public IActionResult GetAllAccounts()
+        {
+            var accounts = _applicationDbContext.Accounts.Include(x => x.User).ToList();
+            if (accounts != null)
+            {
+                return Ok(accounts);
+            }
+            else
+                return NoContent();
+        }
+
+        [HttpPut]
+        [Route("AddAccountToUser")]
+        public IActionResult AddAccountToUser(AccountRequest accountRequest)
+        {
+            var user = _applicationDbContext.Users.Where(x => x.UserID == accountRequest.UserID).FirstOrDefault();
+            if (user != null)
+            {
+                Account account = new Account();
+                account.AccountNumber = accountRequest.AccountNumber;
+                account.BankName = accountRequest.BankName;
+                account.IBAN = accountRequest.IBAN;
+                account.Currency = accountRequest.Currency;
+                account.User = user;
+                _applicationDbContext.Accounts.Add(account);
+                _applicationDbContext.SaveChanges();
+                return Ok();
             }
             else
                 return NotFound();
