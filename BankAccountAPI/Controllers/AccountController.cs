@@ -71,16 +71,16 @@ namespace BankAccountAPI.Controllers
         [Route("DeleteAccount")]
         public IActionResult DeleteAccount(int id)
         {
-            var userToRemove = _applicationDbContext.Accounts.Where(x => x.User.UserID == id).FirstOrDefault();
+            var accountToRemove = _applicationDbContext.Accounts.Where(x => x.AccountId == id).FirstOrDefault();
 
-            if (userToRemove != null)
+            if (accountToRemove != null)
             {
-                _applicationDbContext.Accounts.Remove(userToRemove);
+                _applicationDbContext.Accounts.Remove(accountToRemove);
                 _applicationDbContext.SaveChanges();
                 return Ok();
             }
             else
-                return NotFound($"Account with {id} was found");
+                return NotFound($"Account with {id} was not found");
         }
 
 
