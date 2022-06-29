@@ -83,6 +83,22 @@ namespace BankAccountAPI.Controllers
                 return NotFound($"Account with {id} was not found");
         }
 
-
+        [HttpPost]
+        [Route("EditAccount")]
+        public IActionResult EditAccount(EditAccountRequest editAccountRequest)
+        {
+            var accountFromDb = _applicationDbContext.Accounts.Where(x => x.AccountId == editAccountRequest.AccountId).FirstOrDefault();
+            if (accountFromDb != null)
+            {
+                accountFromDb.BankName = editAccountRequest.BankName;
+                accountFromDb.AccountNumber = editAccountRequest.AccountNumber;
+                accountFromDb.IBAN = editAccountRequest.IBAN;
+                accountFromDb.Currency = editAccountRequest.Currency;
+                _applicationDbContext.SaveChanges();
+                return Ok();
+            }
+            else
+                return NotFound();
+        }
     }
 }
