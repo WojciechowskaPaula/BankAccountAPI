@@ -1,5 +1,6 @@
 using BankAccountAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ options.UseSqlServer(connectionString));
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Host.UseSerilog((ctx, lc) => lc
+.WriteTo.Console()
+.WriteTo.File(".\\Logs\\BankAccountAPI.log.txt", rollingInterval: RollingInterval.Day));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
