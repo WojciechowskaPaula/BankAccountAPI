@@ -18,16 +18,28 @@ namespace BankAccountAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get a list with all users
+        /// </summary>
+        /// <returns>List of users</returns>
         [HttpGet]
         [Route("GetAllUsers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllUsers()
         {
             try
             {
                 _logger.LogInformation("action=getAllUsers");
                 var usersList = _applicationDbContext.Users.ToList();
-                _logger.LogInformation($"action=getAllUsers usersCount:{usersList.Count}");
-                return Ok(usersList);
+                if (usersList != null)
+                {
+                    _logger.LogInformation($"action=getAllUsers usersCount:{usersList.Count}");
+                    return Ok(usersList);
+                }
+                _logger.LogWarning("action=getAllUsers msg='Users not found'");
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -36,6 +48,14 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a user by identifier
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        /// <returns>User details</returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [Route("GetUser")]
         public IActionResult GetUser(int id)
@@ -44,6 +64,7 @@ namespace BankAccountAPI.Controllers
             {
                 _logger.LogInformation($"action=getUser id={id}");
                 var user = _applicationDbContext.Users.Where(x => x.UserID == id).FirstOrDefault();
+
                 if (user == null)
                 {
                     _logger.LogWarning($"action=getUser msg='User with {id} not found'");
@@ -59,17 +80,30 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Add user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>HTTP status codes</returns>
         [HttpPut]
         [Route("AddUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult AddUser(User user)
         {
             try
             {
-                _logger.LogInformation($"action=addUser user='{JsonSerializer.Serialize(user)}'");
-                _applicationDbContext.Users.Add(user);
-                _applicationDbContext.SaveChanges();
-                _logger.LogInformation("action=addUser msg='A new user has been saved'");
-                return Ok();
+                if (user != null)
+                {
+                    _logger.LogInformation($"action=addUser user='{JsonSerializer.Serialize(user)}'");
+                    _applicationDbContext.Users.Add(user);
+                    _applicationDbContext.SaveChanges();
+                    _logger.LogInformation("action=addUser msg='A new user has been saved'");
+                    return Ok();
+                }
+                _logger.LogWarning($"action=addUser msg='User not found'");
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -77,9 +111,16 @@ namespace BankAccountAPI.Controllers
                 return StatusCode(500);
             }
         }
-
+        /// <summary>
+        /// Delete user by identifier
+        /// </summary>
+        /// <param name="id"> User identifier</param>
+        /// <returns>Deleted user details</returns>
         [HttpDelete]
         [Route("DeleteUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteUser(int id)
         {
             try
@@ -103,8 +144,16 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Find users by their nationality
+        /// </summary>
+        /// <param name="nationality"></param>
+        /// <returns>List of users</returns>
         [HttpGet]
         [Route("GetUsersByNationality")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetUsersByNationality(string nationality)
         {
             try
@@ -126,8 +175,16 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Find user by their phone numbers
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns>User details</returns>
         [HttpGet]
         [Route("GetUserByPhoneNumber")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetUserByPhoneNumber(string phoneNumber)
         {
             try
