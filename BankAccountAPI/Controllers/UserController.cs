@@ -1,6 +1,5 @@
 ﻿using BankAccountAPI.Data;
 using BankAccountAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -111,6 +110,7 @@ namespace BankAccountAPI.Controllers
                 return StatusCode(500);
             }
         }
+
         /// <summary>
         /// Delete user by identifier
         /// </summary>

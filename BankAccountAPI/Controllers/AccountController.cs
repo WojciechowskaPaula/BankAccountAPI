@@ -1,7 +1,6 @@
 ﻿using BankAccountAPI.Data;
 using BankAccountAPI.Models;
 using BankAccountAPI.RequestModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -155,6 +154,7 @@ namespace BankAccountAPI.Controllers
                 return StatusCode(500);
             }
         }
+
         /// <summary>
         /// Edit account
         /// </summary>

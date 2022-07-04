@@ -26,6 +26,5 @@ namespace BankAccountAPI.Models
         [Required]
         [MinLength(3, ErrorMessage = "Nationality name must contain minimum 3 characters")]
         public string Nationality { get; set; }
-
     }
 }
