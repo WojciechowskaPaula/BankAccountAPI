@@ -2,7 +2,7 @@
 
 Simple API  for manage users and their accounts. 
 
-##Description
+## Description
 
 The API allows reading, adding, deleting and editing users and their accounts in a connected SQL database.
 Plus methods to search for users by specific properties. 
