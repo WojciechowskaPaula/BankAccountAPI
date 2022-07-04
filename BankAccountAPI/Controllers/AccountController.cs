@@ -21,8 +21,16 @@ namespace BankAccountAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Finding the account by id
+        /// </summary>
+        /// <param name="id">Account identifier</param>
+        /// <returns>Account details</returns>
         [HttpGet]
         [Route("GetAccountByUserId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAccountByUserId(int id)
         {
             try
@@ -45,8 +53,15 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a list with all accounts
+        /// </summary>
+        /// <returns>List of accounts</returns>
         [HttpGet]
         [Route("GetAllAccounts")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllAccounts()
         {
             try
@@ -68,8 +83,16 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Add account to an existing user
+        /// </summary>
+        /// <param name="accountRequest"></param>
+        /// <returns>HTTP status code</returns>
         [HttpPut]
         [Route("AddAccountToUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult AddAccountToUser(AccountRequest accountRequest)
         {
             try
@@ -99,8 +122,16 @@ namespace BankAccountAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete account by identifier
+        /// </summary>
+        /// <param name="id">Account identifier</param>
+        /// <returns>HTTP status code</returns>
         [HttpDelete]
         [Route("DeleteAccount")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteAccount(int id)
         {
             try
@@ -124,9 +155,16 @@ namespace BankAccountAPI.Controllers
                 return StatusCode(500);
             }
         }
-
+        /// <summary>
+        /// Edit account
+        /// </summary>
+        /// <param name="editAccountRequest"></param>
+        /// <returns>HTTP status code</returns>
         [HttpPost]
         [Route("EditAccount")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult EditAccount(EditAccountRequest editAccountRequest)
         {
             try
