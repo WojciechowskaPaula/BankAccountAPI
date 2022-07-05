@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BankAccountAPI.Models
 {
     public class User
     {
         [Required]
+        [JsonIgnore]
         public int UserID { get; set; }
 
         [Required]
